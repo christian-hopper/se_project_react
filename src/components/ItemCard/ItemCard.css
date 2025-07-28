@@ -1,0 +1,36 @@
+.cards__item {
+  display: flex;
+  justify-content: center;
+  width: 323px;
+  height: 328px;
+  cursor: pointer;
+}
+
+.cards__name {
+  font-weight: 700;
+  font-size: 16px;
+  position: absolute;
+  margin: 15px 0 0;
+  padding: 2px 12px;
+  background-color: #fff;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.cards__image {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .cards__item {
+    width: calc(50% - 8px);
+    height: calc(50% - 8px);
+  }
+
+  .cards__name {
+    margin: 9px 0 0;
+  }
+}
