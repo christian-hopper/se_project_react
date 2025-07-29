@@ -30,6 +30,20 @@ function App() {
   };
 
   useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscapeClose = (event) => {
+      if (event.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+    document.addEventListener("keydown", handleEscapeClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscapeClose);
+    };
+  }, [activeModal]);
+
+  useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
         const filteredWeather = filterWeather(data);
@@ -50,7 +64,7 @@ function App() {
       <ModalWithForm
         titleText="New garment"
         buttonText="Add garment"
-        activeModal={activeModal}
+        isOpen={activeModal === "add-clothes"}
         closeActiveModal={closeActiveModal}
       >
         <label htmlFor="name" className="modal__label">
@@ -106,7 +120,7 @@ function App() {
         </fieldset>
       </ModalWithForm>
       <ItemModal
-        activeModal={activeModal}
+        isOpen={activeModal === "preview-card"}
         card={selectedCard}
         closeActiveModal={closeActiveModal}
       />
