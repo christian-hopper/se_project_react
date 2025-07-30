@@ -22,6 +22,7 @@ export const filterWeather = (data) => {
   result.isDay = isDayTime({
     sunrise: data.sys.sunrise,
     sunset: data.sys.sunset,
+    now: getCurrentTime(),
   });
   return result;
 };
