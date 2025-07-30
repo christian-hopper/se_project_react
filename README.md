@@ -6,12 +6,20 @@ WTWR is a weather-based outfit recommendation web app that helps users choose th
 
 ## Table of Contents
 
+- [Deployment](#deployment)
 - [Demo](#demo)
 - [Features](#features)
 - [Technologies](#technologies)
 - [Usage](#usage)
 - [Future Improvements](#future-improvements)
 - [Author](#author)
+
+---
+
+## Deployment
+
+WTWR is deployed on GitHub Pages:
+[View Live Site](https://christian-hopper.github.io/se_project_react/)
 
 ---
 
@@ -55,30 +63,30 @@ A live demo can be hosted on GitHub Pages or Vercel (link to be added once deplo
 
 ## Usage
 
-# Viewing Weather and Outfit Suggestions
+### Viewing Weather and Outfit Suggestions
 
 - On page load, WTWR fetches the current weather for the location and displays current city name, date, and temperature in °F and °C.
 - Based on the temperature, the app categorizes the weather into hot, warm, or cold and shows outfit suggestions appropriate for that weather.
 
-# Adding a New Clothing Item
+### Adding a New Clothing Item
 
 - Click the + Add clothes button in the header or mobile menu.
 - A modal form appears allowing you to enter the garment's name, provide an image URL to visually represent the item, and select the weather type this garment is suitable for: Hot, Warm, or Cold.
 - Submit the form to add the garment (currently, the app updates the UI locally).
 - The new garment will appear in the outfit suggestions list if its weather type matches the current weather.
 
-# Previewing Clothing Items
+### Previewing Clothing Items
 
 - Click any clothing item card to open a modal showing more details about that garment.
 - To close the preview modal, either click the close icon or press the Escape key.
 
-# Mobile Experience
+### Mobile Experience
 
 - Use the hamburger menu button in the header to toggle the mobile menu.
 - The mobile menu includes the + Add clothes button and user info.
 - The app is fully responsive and adapts layout based on screen size.
 
-# Keyboard Accessibility
+### Keyboard Accessibility
 
 - You can close any open modal by pressing the Escape key.
 - All interactive elements have accessible labels and proper focus management.
