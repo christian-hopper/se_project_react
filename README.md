@@ -25,7 +25,8 @@ WTWR is deployed on GitHub Pages:
 
 ## Demo
 
-A live demo can be hosted on GitHub Pages or Vercel (link to be added once deployed).
+Here's a video walkthrough of my process behind the development:
+[WTWR Demo]()
 
 ---
 
