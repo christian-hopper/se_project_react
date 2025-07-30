@@ -19,6 +19,7 @@ WTWR is a weather-based outfit recommendation web app that helps users choose th
 ## Deployment
 
 WTWR is deployed on GitHub Pages:
+
 [View Live Site](https://christian-hopper.github.io/se_project_react/)
 
 ---
@@ -26,6 +27,7 @@ WTWR is deployed on GitHub Pages:
 ## Demo
 
 Here's a video walkthrough of my process behind the development:
+
 [WTWR Demo]()
 
 ---
