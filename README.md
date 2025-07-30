@@ -100,7 +100,7 @@ A live demo can be hosted on GitHub Pages or Vercel (link to be added once deplo
 
 ## Author
 
-Christian Hopper
-Github: [christian-hopper](https://github.com/christian-hopper)
-LinkedIn: [christian-hopper](https://www.linkedin.com/in/christian-hopper-105085369/)
-Email: hopperchristian@yahoo.com
+- Christian Hopper
+- Github: [christian-hopper](https://github.com/christian-hopper)
+- LinkedIn: [christian-hopper](https://www.linkedin.com/in/christian-hopper-105085369/)
+- Email: hopperchristian@yahoo.com
