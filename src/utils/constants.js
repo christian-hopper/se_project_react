@@ -37,11 +37,11 @@ export const weatherTypes = {
 
 export const defaultWeatherTypes = {
   day: {
-    url: new URL("../../assets/images/default-day.png", import.meta.url).href,
+    url: new URL("../assets/images/default-day.png", import.meta.url).href,
     condition: "default-day",
   },
   night: {
-    url: new URL("../../assets/images/default-night.png", import.meta.url).href,
+    url: new URL("../assets/images/default-night.png", import.meta.url).href,
     condition: "default-night",
   },
 };
