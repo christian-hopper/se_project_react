@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import "./Header.css";
 import "../../styles/common.css";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import logo from "../../assets/images/logo.svg";
 import avatar from "../../assets/images/avatar.svg";
 import hamburgerIcon from "../../assets/images/hamburger-icon.svg";
-import closeIcon from "../../assets/images/close-icon.png";
 
-function Header({ handleAddClick, weather }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+import OverlayContext from "../../contexts/OverlayContext";
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+function Header({ weather, onAddClick }) {
+  const { activeOverlay, toggleOverlay, closeOverlay } =
+    useContext(OverlayContext);
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -24,44 +24,60 @@ function Header({ handleAddClick, weather }) {
     <header className="header">
       <div className="header__logo-container">
         <div className="header__logo-block">
-          <img src={logo} alt="WTWR - What to Wear?" className="header__logo" />
-
+          <Link to="/" className="header__logo-link">
+            <img
+              src={logo}
+              alt="WTWR - What to Wear?"
+              className="header__logo"
+            />
+          </Link>
           <p className="header__date-location">
             {currentDate}, {weather.city}
           </p>
         </div>
 
         {/* Mobile View */}
-        <button
-          className="header__menu-toggle"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          <img
-            src={mobileMenuOpen ? closeIcon : hamburgerIcon}
-            alt={mobileMenuOpen ? "Close menu" : "Open menu"}
-            className={
-              mobileMenuOpen ? "header__close-icon" : "header__menu-icon"
-            }
-          />
-        </button>
+        {activeOverlay !== "mobile-menu" && (
+          <button
+            onClick={() => toggleOverlay("mobile-menu")}
+            aria-label="Open menu"
+            className="header__menu-toggle"
+          >
+            <img
+              src={hamburgerIcon}
+              alt="Open menu"
+              className="header__menu-icon"
+            />
+          </button>
+        )}
       </div>
 
       {/* Desktop View */}
+      <ToggleSwitch className="header__toggle-switch" />
       <button
-        onClick={handleAddClick}
+        onClick={onAddClick}
         className="header__add-clothes-button add-clothes-button"
       >
         + Add clothes
       </button>
 
-      <div className="header__user-container">
-        <p className="header__username username">User Name</p>
-        <img src={avatar} alt="User Avatar" className="header__avatar avatar" />
-      </div>
+      <Link to="/profile" className="header__profile-link">
+        <div className="header__user-container">
+          <p className="header__username username">User Name</p>
+          <img
+            src={avatar}
+            alt="User Avatar"
+            className="header__avatar avatar"
+          />
+        </div>
+      </Link>
 
       {/* Mobile Menu */}
-      <MobileMenu isOpen={mobileMenuOpen} handleAddClick={handleAddClick} />
+      <MobileMenu
+        isOpen={activeOverlay === "mobile-menu"}
+        onAddClick={onAddClick}
+        onClose={closeOverlay}
+      />
     </header>
   );
 }

@@ -1,25 +1,25 @@
-.cards__text {
+.main__description {
   font-size: 20px;
   font-weight: 700;
   line-height: 100%;
   margin: 40px 0 34px;
 }
 
-.cards__list {
+.main__items {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   padding: 0;
-  margin: 0 0 85px;
+  margin: 0;
   list-style-type: none;
 }
 
 @media (max-width: 768px) {
-  .cards__text {
+  .main__description {
     margin: 32px 0 20px;
   }
 
-  .cards__list {
+  .main__items {
     gap: 16px;
   }
 }

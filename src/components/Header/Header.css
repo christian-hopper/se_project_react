@@ -9,6 +9,10 @@
   position: relative;
 }
 
+.header .toggle-switch {
+  flex-shrink: 0;
+}
+
 .header__logo-container {
   display: flex;
   align-items: flex-start;
@@ -19,7 +23,6 @@
 .header__logo-block {
   display: flex;
   align-items: center;
-  gap: 32px;
 }
 
 .header__logo {
@@ -32,9 +35,22 @@
   margin: 0;
 }
 
+.header__add-clothes-button {
+  white-space: nowrap;
+}
+
+.header__profile-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .header__user-container {
   display: flex;
   align-items: center;
+}
+
+.header__username {
+  white-space: nowrap;
 }
 
 .header__menu-toggle {
@@ -42,19 +58,12 @@
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1001;
   padding: 0;
 }
 
 .header__menu-icon {
   width: 40px;
   height: 40px;
-}
-
-.header__close-icon {
-  width: 21.21px;
-  height: 21.21px;
-  margin: 11.39px 11px 0 0;
 }
 
 @media (max-width: 768px) {
@@ -77,5 +86,8 @@
 
   .header__menu-toggle {
     display: block;
+  }
+  .header__toggle-switch {
+    display: none;
   }
 }

@@ -7,10 +7,14 @@ function ModalWithForm({
   titleText,
   isOpen,
   closeActiveModal,
+  onSubmit,
 }) {
   return (
-    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
-      <div className="modal__content">
+    <div
+      className={`modal ${isOpen ? "modal_opened" : ""}`}
+      onClick={closeActiveModal}
+    >
+      <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal__title">{titleText}</h2>
         <button
           onClick={closeActiveModal}
@@ -23,7 +27,7 @@ function ModalWithForm({
             className="modal__close-button_image"
           />
         </button>
-        <form className="modal__form">
+        <form className="modal__form" onSubmit={onSubmit}>
           {children}
           <button type="submit" className="modal__submit-button">
             {buttonText}

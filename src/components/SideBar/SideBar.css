@@ -1,0 +1,33 @@
+.sidebar {
+  display: flex;
+  align-items: center;
+  margin: 19px 116px 0 0;
+}
+
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  margin: 0 16px 0 0;
+  align-items: center;
+}
+
+.sidebar__username {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin: 20px 0 0;
+  }
+
+  .sidebar__avatar {
+  }
+
+  .sidebar__username {
+    font-size: 24px;
+    margin: 0 0 12px 0;
+  }
+}
