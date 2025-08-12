@@ -13,6 +13,7 @@ function ToggleSwitch({ className }) {
         type="checkbox"
         className="toggle-switch__checkbox"
         onChange={handleToggleSwitchChange}
+        checked={currentTemperatureUnit === "C"}
         aria-label="Toggle temperature unit"
       />
       <span className="toggle-switch__slider"></span>

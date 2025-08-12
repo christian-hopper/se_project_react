@@ -59,11 +59,11 @@ function App() {
     addItem(newItem)
       .then((addedItem) => {
         setClothingItems((items) => [addedItem, ...items]);
+        closeOverlay();
       })
       .catch((error) => {
         console.error("Error adding clothing item:", error);
       });
-    closeOverlay();
   };
   const handleCardDelete = () => {
     deleteItem(selectedCard._id)

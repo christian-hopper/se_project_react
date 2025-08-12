@@ -40,7 +40,7 @@ function MobileMenu({ onAddClick, isOpen, onClose }) {
           className="mobile-menu__close-icon"
         />
       </button>
-      <Link to="/profile" className="mobile-menu__link">
+      <Link to="/profile" onClick={onClose} className="mobile-menu__link">
         <div className="mobile-menu__user">
           <p className="mobile-menu__username username">User Name</p>
           <img

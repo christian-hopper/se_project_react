@@ -3,8 +3,8 @@ export const weatherTypes = {
     clear: {
       url: new URL("../assets/images/clear-day.png", import.meta.url).href,
     },
-    cloudy: {
-      url: new URL("../assets/images/cloudy-day.png", import.meta.url).href,
+    clouds: {
+      url: new URL("../assets/images/clouds-day.png", import.meta.url).href,
     },
     rain: {
       url: new URL("../assets/images/rain-day.png", import.meta.url).href,
@@ -20,8 +20,8 @@ export const weatherTypes = {
     clear: {
       url: new URL("../assets/images/clear-night.png", import.meta.url).href,
     },
-    cloudy: {
-      url: new URL("../assets/images/cloudy-night.png", import.meta.url).href,
+    clouds: {
+      url: new URL("../assets/images/clouds-night.png", import.meta.url).href,
     },
     rain: {
       url: new URL("../assets/images/rain-night.png", import.meta.url).href,
