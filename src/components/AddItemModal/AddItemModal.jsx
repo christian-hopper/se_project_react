@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
@@ -24,6 +24,12 @@ function AddItemModal({ isOpen, closeActiveModal, onAddItemModalSubmit }) {
     setWeather("");
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      handleReset();
+    }
+  }, [isOpen]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newItem = {
@@ -33,7 +39,6 @@ function AddItemModal({ isOpen, closeActiveModal, onAddItemModalSubmit }) {
       weather,
     };
     onAddItemModalSubmit(newItem);
-    handleReset();
   };
 
   return (
