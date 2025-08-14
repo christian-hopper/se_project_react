@@ -3,6 +3,7 @@ import closeIcon from "../../assets/images/close-icon.png";
 
 function DeleteConfirmationModal({
   isOpen,
+  isLoading,
   onConfirm,
   onCancel,
   closeActiveModal,
@@ -34,12 +35,14 @@ function DeleteConfirmationModal({
             <button
               onClick={onConfirm}
               className="delete-confirmation__confirm-button"
+              disabled={isLoading}
             >
-              Yes, delete item
+              {isLoading ? "Deleting..." : "Yes, delete item"}
             </button>
             <button
               onClick={onCancel}
               className="delete-confirmation__cancel-button"
+              disabled={isLoading}
             >
               Cancel
             </button>

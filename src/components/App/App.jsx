@@ -5,16 +5,18 @@ import "./App.css";
 import { getWeather, filterWeather } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 import { getItems, addItem, deleteItem } from "../../utils/api";
+
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
+import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import OverlayContext from "../../contexts/OverlayContext";
-import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
+import useModalClose from "../../hooks/useModalClose";
 
 function App() {
   const [weather, setWeather] = useState({
@@ -29,6 +31,7 @@ function App() {
   const [activeOverlay, setActiveOverlay] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Overlay functions
   const openOverlay = (name) => setActiveOverlay(name);
@@ -36,12 +39,23 @@ function App() {
   const toggleOverlay = (name) =>
     activeOverlay === name ? closeOverlay() : openOverlay(name);
 
+  // Escape key + overlay click hook
+  useModalClose(activeOverlay, closeOverlay);
+
+  // Scroll lock when modal is open
+  useEffect(() => {
+    document.body.style.overflow = activeOverlay ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeOverlay]);
+
   // Temperature toggle
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit((unit) => (unit === "F" ? "C" : "F"));
   };
 
-  // Handlers for modals
+  // Handlers
   const handleAddClick = () => openOverlay("add-clothes");
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -55,7 +69,9 @@ function App() {
     setSelectedCard({});
     closeOverlay();
   };
+
   const handleAddItemModalSubmit = (newItem) => {
+    setIsLoading(true);
     addItem(newItem)
       .then((addedItem) => {
         setClothingItems((items) => [addedItem, ...items]);
@@ -63,9 +79,12 @@ function App() {
       })
       .catch((error) => {
         console.error("Error adding clothing item:", error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
+
   const handleCardDelete = () => {
+    setIsLoading(true);
     deleteItem(selectedCard._id)
       .then(() => {
         setClothingItems((items) =>
@@ -76,58 +95,22 @@ function App() {
       })
       .catch((error) => {
         console.error("Error deleting clothing item:", error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   // Fetch clothing items
   useEffect(() => {
     getItems()
-      .then((data) => {
-        setClothingItems(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching clothing items:", error);
-      });
+      .then(setClothingItems)
+      .catch((error) => console.error("Error fetching clothing items:", error));
   }, []);
-
-  // Escape key closes overlay
-  useEffect(() => {
-    if (!activeOverlay) return;
-
-    const handleEscapeClose = (event) => {
-      if (event.key === "Escape") {
-        closeOverlay();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscapeClose);
-    return () => {
-      document.removeEventListener("keydown", handleEscapeClose);
-    };
-  }, [activeOverlay]);
-
-  // Scroll lock on overlay open
-  useEffect(() => {
-    if (activeOverlay) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [activeOverlay]);
 
   // Fetch weather
   useEffect(() => {
     getWeather(coordinates, APIkey)
-      .then((data) => {
-        const filteredWeather = filterWeather(data);
-        setWeather(filteredWeather);
-      })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error);
-      });
+      .then((data) => setWeather(filterWeather(data)))
+      .catch((error) => console.error("Error fetching weather data:", error));
   }, []);
 
   return (
@@ -172,6 +155,7 @@ function App() {
 
             <AddItemModal
               isOpen={activeOverlay === "add-clothes"}
+              isLoading={isLoading}
               closeActiveModal={closeOverlay}
               onAddItemModalSubmit={handleAddItemModalSubmit}
             />
@@ -182,8 +166,10 @@ function App() {
               closeActiveModal={closeOverlay}
               openConfirmationModal={openConfirmationModal}
             />
+
             <DeleteConfirmationModal
               isOpen={activeOverlay === "delete-confirmation"}
+              isLoading={isLoading}
               onConfirm={handleCardDelete}
               onCancel={handleCardCancel}
               closeActiveModal={closeOverlay}

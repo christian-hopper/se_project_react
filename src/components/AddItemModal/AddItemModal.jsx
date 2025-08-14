@@ -1,121 +1,91 @@
-import { useState, useEffect } from "react";
-
+import { useEffect } from "react";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import useForm from "../../hooks/useForm";
 
-function AddItemModal({ isOpen, closeActiveModal, onAddItemModalSubmit }) {
-  const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [weather, setWeather] = useState("");
+function AddItemModal({
+  isOpen,
+  isLoading,
+  closeActiveModal,
+  onAddItemModalSubmit,
+}) {
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-  const handleImageUrlChange = (e) => {
-    setImageUrl(e.target.value);
-  };
-  const handleWeatherChange = (e) => {
-    setWeather(e.target.value);
-  };
-
-  const handleReset = () => {
-    setName("");
-    setImageUrl("");
-    setWeather("");
-  };
+  const { name, imageUrl, weather } = values;
 
   useEffect(() => {
     if (isOpen) {
-      handleReset();
+      setValues({ name: "", imageUrl: "", weather: "" });
     }
   }, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newItem = {
-      _id: Date.now().toString(),
-      name,
-      imageUrl,
-      weather,
-    };
+    const newItem = { _id: Date.now().toString(), ...values };
     onAddItemModalSubmit(newItem);
   };
 
   return (
     <ModalWithForm
       titleText="New garment"
-      buttonText="Add garment"
+      buttonText={isLoading ? "Adding..." : "Add garment"}
       isOpen={isOpen}
       closeActiveModal={closeActiveModal}
       onSubmit={handleSubmit}
     >
-      {/* form inputs */}
       <label htmlFor="name" className="modal__label">
         Name
         <input
           id="name"
+          name="name"
           type="text"
           placeholder="Name"
           minLength="1"
           maxLength="30"
           required
           value={name}
-          onChange={handleNameChange}
+          onChange={handleChange}
           className="modal__input"
         />
       </label>
+
       <label htmlFor="imageUrl" className="modal__label">
         Image
         <input
           id="imageUrl"
+          name="imageUrl"
           type="text"
           placeholder="Image URL"
           required
           value={imageUrl}
-          onChange={handleImageUrlChange}
+          onChange={handleChange}
           className="modal__input"
         />
       </label>
+
       <fieldset className="modal__fieldset">
         <legend className="modal__legend">Select the weather type</legend>
-        <label htmlFor="hot" className="modal__radio-label">
-          <input
-            id="hot"
-            type="radio"
-            name="weather"
-            value="hot"
-            checked={weather === "hot"}
-            onChange={handleWeatherChange}
-            className="modal__radio"
-          />
-          Hot
-        </label>
-        <label htmlFor="warm" className="modal__radio-label">
-          <input
-            id="warm"
-            type="radio"
-            name="weather"
-            value="warm"
-            checked={weather === "warm"}
-            onChange={handleWeatherChange}
-            className="modal__radio"
-          />
-          Warm
-        </label>
-        <label htmlFor="cold" className="modal__radio-label">
-          <input
-            id="cold"
-            type="radio"
-            name="weather"
-            value="cold"
-            checked={weather === "cold"}
-            onChange={handleWeatherChange}
-            className="modal__radio"
-          />
-          Cold
-        </label>
+        {["hot", "warm", "cold"].map((type) => (
+          <label key={type} htmlFor={type} className="modal__radio-label">
+            <input
+              id={type}
+              name="weather"
+              type="radio"
+              value={type}
+              checked={weather === type}
+              onChange={handleChange}
+              className="modal__radio"
+            />
+            {type.charAt(0).toUpperCase() + type.slice(1)}
+          </label>
+        ))}
       </fieldset>
     </ModalWithForm>
   );
 }
+
 export default AddItemModal;
