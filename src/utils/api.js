@@ -15,19 +15,37 @@ function getItems() {
 }
 
 function addItem(item) {
+  const token = localStorage.getItem("jwt");
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(item),
   });
 }
 
 function deleteItem(itemId) {
+  const token = localStorage.getItem("jwt");
   return request(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 }
 
-export { getItems, addItem, deleteItem };
+function updateUserInfo({ name, avatar }) {
+  const token = localStorage.getItem("jwt");
+  return request(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  });
+}
+
+export { checkResponse, getItems, addItem, deleteItem, updateUserInfo };

@@ -8,6 +8,9 @@ function ModalWithForm({
   isOpen,
   closeActiveModal,
   onSubmit,
+  secondaryText,
+  onSecondaryClick,
+  isSubmitDisabled = false,
 }) {
   return (
     <div
@@ -29,9 +32,26 @@ function ModalWithForm({
         </button>
         <form className="modal__form" onSubmit={onSubmit}>
           {children}
-          <button type="submit" className="modal__submit-button">
-            {buttonText}
-          </button>
+          <div className="modal__submit-wrapper">
+            <button
+              type="submit"
+              className={`modal__submit-button ${
+                !isSubmitDisabled ? "modal__submit-button_enabled" : ""
+              }`}
+              disabled={isSubmitDisabled}
+            >
+              {buttonText}
+            </button>
+            {secondaryText && onSecondaryClick && (
+              <button
+                type="button"
+                className="modal__secondary-button"
+                onClick={onSecondaryClick}
+              >
+                {secondaryText}
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>

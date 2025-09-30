@@ -1,7 +1,13 @@
 .sidebar {
   display: flex;
+  flex-direction: column;
+  margin: 15px 116px 0 0;
+}
+
+.sidebar__user {
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  margin: 19px 116px 0 0;
 }
 
 .sidebar__avatar {
@@ -18,12 +24,36 @@
   white-space: nowrap;
 }
 
+.sidebar__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 24px 0 0 0;
+  color: #000;
+}
+
+.sidebar__edit-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sidebar__logout-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     margin: 20px 0 0;
-  }
-
-  .sidebar__avatar {
   }
 
   .sidebar__username {

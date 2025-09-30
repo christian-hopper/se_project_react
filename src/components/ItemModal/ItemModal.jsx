@@ -1,7 +1,15 @@
+import { useContext } from "react";
+
 import "./ItemModal.css";
+
 import closeIcon from "../../assets/images/close-icon.png";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemModal({ card, isOpen, closeActiveModal, openConfirmationModal }) {
+  const currentUser = useContext(CurrentUserContext);
+
+  const isOwner = card && currentUser && card.owner === currentUser._id;
+
   return (
     <div
       className={`modal modal--card ${isOpen ? "modal_opened" : ""}`}
@@ -21,15 +29,17 @@ function ItemModal({ card, isOpen, closeActiveModal, openConfirmationModal }) {
             <h2 className="modal__caption">{card.name}</h2>
             <p className="modal__weather">Weather: {card.weather}</p>
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              openConfirmationModal(card);
-            }}
-            className="modal__delete-button"
-          >
-            Delete item
-          </button>
+          {isOwner && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                openConfirmationModal(card);
+              }}
+              className="modal__delete-button"
+            >
+              Delete item
+            </button>
+          )}
         </div>
       </div>
     </div>

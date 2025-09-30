@@ -22,6 +22,10 @@ WTWR is deployed on GitHub Pages:
 
 [View Live Site](https://christian-hopper.github.io/se_project_react/)
 
+[Frontend Repository](https://github.com/christian-hopper/se_project_react)
+
+[Backend Repository](https://github.com/christian-hopper/se_project_express)
+
 ---
 
 ## Demo

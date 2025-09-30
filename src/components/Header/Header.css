@@ -35,10 +35,6 @@
   margin: 0;
 }
 
-.header__add-clothes-button {
-  white-space: nowrap;
-}
-
 .header__profile-link {
   text-decoration: none;
   color: inherit;
@@ -47,10 +43,6 @@
 .header__user-container {
   display: flex;
   align-items: center;
-}
-
-.header__username {
-  white-space: nowrap;
 }
 
 .header__menu-toggle {

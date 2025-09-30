@@ -29,6 +29,8 @@ function AddItemModal({
     onAddItemModalSubmit(newItem);
   };
 
+  const isSubmitDisabled = !name || !imageUrl || !weather;
+
   return (
     <ModalWithForm
       titleText="New garment"
@@ -36,6 +38,7 @@ function AddItemModal({
       isOpen={isOpen}
       closeActiveModal={closeActiveModal}
       onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitDisabled}
     >
       <label htmlFor="name" className="modal__label">
         Name
