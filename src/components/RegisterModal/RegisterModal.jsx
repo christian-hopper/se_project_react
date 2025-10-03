@@ -37,10 +37,10 @@ function RegisterModal({ isOpen, onClose, onRegister, openLogin }) {
       onSecondaryClick={openLogin}
       isSubmitDisabled={isSubmitDisabled}
     >
-      <label htmlFor="email" className="modal__label">
+      <label htmlFor="register-email" className="modal__label">
         Email *
         <input
-          id="email"
+          id="register-email"
           type="email"
           placeholder="Email"
           required
@@ -50,10 +50,10 @@ function RegisterModal({ isOpen, onClose, onRegister, openLogin }) {
         />
       </label>
 
-      <label htmlFor="password" className="modal__label">
+      <label htmlFor="register-password" className="modal__label">
         Password *
         <input
-          id="password"
+          id="register-password"
           type="password"
           placeholder="Password"
           required
@@ -62,10 +62,10 @@ function RegisterModal({ isOpen, onClose, onRegister, openLogin }) {
           className="modal__input"
         />
       </label>
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="register-name" className="modal__label">
         Name *
         <input
-          id="name"
+          id="register-name"
           type="text"
           placeholder="Name"
           minLength="1"
@@ -77,10 +77,10 @@ function RegisterModal({ isOpen, onClose, onRegister, openLogin }) {
         />
       </label>
 
-      <label htmlFor="avatar" className="modal__label">
+      <label htmlFor="register-avatar" className="modal__label">
         Avatar URL *
         <input
-          id="avatar"
+          id="register-avatar"
           type="text"
           placeholder="Avatar URL"
           value={avatar}

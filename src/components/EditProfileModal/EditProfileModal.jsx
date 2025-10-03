@@ -52,10 +52,10 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
       onSubmit={handleSubmit}
       isSubmitDisabled={isSubmitDisabled}
     >
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="edit-name" className="modal__label">
         Name *
         <input
-          id="name"
+          id="edit-name"
           type="text"
           placeholder="Name"
           minLength="1"
@@ -67,10 +67,10 @@ function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
         />
       </label>
 
-      <label htmlFor="avatar" className="modal__label">
+      <label htmlFor="edit-avatar" className="modal__label">
         Avatar *
         <input
-          id="avatar"
+          id="edit-avatar"
           type="url"
           placeholder="Avatar URL"
           required

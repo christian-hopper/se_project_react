@@ -40,10 +40,9 @@ function AddItemModal({
       onSubmit={handleSubmit}
       isSubmitDisabled={isSubmitDisabled}
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name
         <input
-          id="name"
           name="name"
           type="text"
           placeholder="Name"
@@ -56,10 +55,9 @@ function AddItemModal({
         />
       </label>
 
-      <label htmlFor="imageUrl" className="modal__label">
+      <label className="modal__label">
         Image
         <input
-          id="imageUrl"
           name="imageUrl"
           type="text"
           placeholder="Image URL"
@@ -73,9 +71,8 @@ function AddItemModal({
       <fieldset className="modal__fieldset">
         <legend className="modal__legend">Select the weather type</legend>
         {["hot", "warm", "cold"].map((type) => (
-          <label key={type} htmlFor={type} className="modal__radio-label">
+          <label key={type} className="modal__radio-label">
             <input
-              id={type}
               name="weather"
               type="radio"
               value={type}

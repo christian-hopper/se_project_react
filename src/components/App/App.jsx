@@ -149,10 +149,6 @@ function App() {
       .catch((error) => console.error(error));
   };
 
-  // Grader help!!! Sign up works perfectly fine, but logging in gives a 400 error from the server
-  // even though the request payloads are identical. I've spent hours trying to debug this and I'm out of ideas.
-  // Please help if you can.
-
   const handleLogin = ({ email, password }) => {
     signin({ email, password })
       .then((res) => {
@@ -171,12 +167,17 @@ function App() {
     localStorage.removeItem("jwt");
     setCurrentUser(null);
     setIsLoggedIn(false);
+    setClothingItems([]);
   };
 
-  // Fetch clothing items
+  // Fetch clothing items only for logged in users
   useEffect(() => {
-    getItems().then(setClothingItems).catch(console.error);
-  }, []);
+    if (isLoggedIn) {
+      getItems().then(setClothingItems).catch(console.error);
+    } else {
+      setClothingItems([]); // clear on logout
+    }
+  }, [isLoggedIn]);
 
   // Fetch weather
   useEffect(() => {
