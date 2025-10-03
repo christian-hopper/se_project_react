@@ -6,15 +6,38 @@
   cursor: pointer;
 }
 
+.cards__header {
+  position: absolute;
+  display: flex;
+  padding: 0 10px;
+  margin: 15px 0 0;
+}
+
 .cards__name {
   font-weight: 700;
   font-size: 16px;
-  position: absolute;
-  margin: 15px 0 0;
   padding: 2px 12px;
+  margin: 0;
   background-color: #fff;
   border-radius: 4px;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.cards__like-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 0;
+  z-index: 1000;
+}
+
+.cards__like-button_image {
+  width: 18px;
+  height: 15px;
 }
 
 .cards__image {

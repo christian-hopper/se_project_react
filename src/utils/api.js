@@ -36,6 +36,24 @@ function deleteItem(itemId) {
   });
 }
 
+function addCardLike(itemId, token) {
+  return request(`${baseUrl}/items/${itemId}/likes`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+function removeCardLike(itemId, token) {
+  return request(`${baseUrl}/items/${itemId}/likes`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 function updateUserInfo({ name, avatar }) {
   const token = localStorage.getItem("jwt");
   return request(`${baseUrl}/users/me`, {
@@ -48,4 +66,12 @@ function updateUserInfo({ name, avatar }) {
   });
 }
 
-export { checkResponse, getItems, addItem, deleteItem, updateUserInfo };
+export {
+  checkResponse,
+  getItems,
+  addItem,
+  deleteItem,
+  addCardLike,
+  removeCardLike,
+  updateUserInfo,
+};

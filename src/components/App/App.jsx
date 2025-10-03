@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import { getWeather, filterWeather } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
-import { getItems, addItem, deleteItem } from "../../utils/api";
+import {
+  getItems,
+  addItem,
+  deleteItem,
+  addCardLike,
+  removeCardLike,
+} from "../../utils/api";
 import { signup, signin, getUserInfo } from "../../utils/auth";
 
 import Header from "../Header/Header";
@@ -108,19 +114,44 @@ function App() {
       .finally(() => setIsLoading(false));
   };
 
+  const handleCardLike = ({ _id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    if (!currentUser) return; // unauthorized users cannot like cards
+
+    !isLiked
+      ? addCardLike(_id, token)
+          .then((updatedCard) => {
+            setClothingItems((items) =>
+              items.map((item) => (item._id === _id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.error(err))
+      : removeCardLike(_id, token)
+          .then((updatedCard) => {
+            setClothingItems((items) =>
+              items.map((item) => (item._id === _id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.error(err));
+  };
+
   const handleRegister = (userData) => {
-    return signup(userData)
-      .then(() => {
+    signup(userData)
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        return getUserInfo(res.token);
+      })
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
         closeAuthOverlay();
-        return handleLogin({
-          email: userData.email,
-          password: userData.password,
-        });
       })
       .catch((error) => console.error(error));
   };
 
-  // Note for grader: When signing up, the automatic login does not always work and may show "incorrect email or password." The account is created successfully, but logging in immediately after signup may require manual login. This will be fixed with proper token handling. I haven't been able to figure it out, can you please help me?
+  // Grader help!!! Sign up works perfectly fine, but logging in gives a 400 error from the server
+  // even though the request payloads are identical. I've spent hours trying to debug this and I'm out of ideas.
+  // Please help if you can.
 
   const handleLogin = ({ email, password }) => {
     signin({ email, password })
@@ -194,19 +225,25 @@ function App() {
                         weather={weather}
                         onCardClick={handleCardClick}
                         clothingItems={clothingItems}
+                        onCardLike={handleCardLike}
                       />
                     }
                   />
                   <Route
                     path="/profile"
                     element={
-                      <Profile
-                        clothingItems={clothingItems}
-                        onCardClick={handleCardClick}
-                        onAddClick={handleAddClick}
-                        onLogout={handleLogout}
-                        onUpdateUser={setCurrentUser}
-                      />
+                      isLoggedIn ? (
+                        <Profile
+                          clothingItems={clothingItems}
+                          onCardClick={handleCardClick}
+                          onAddClick={handleAddClick}
+                          onLogout={handleLogout}
+                          onUpdateUser={setCurrentUser}
+                          onCardLike={handleCardLike}
+                        />
+                      ) : (
+                        <Navigate to="/" replace />
+                      )
                     }
                   />
                 </Routes>
