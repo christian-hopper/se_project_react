@@ -60,7 +60,7 @@
 
   .modal__content--card {
     max-width: 343px;
-    height: 443px;
+    height: 463px;
     border-radius: 12px;
   }
 
@@ -75,6 +75,6 @@
   }
 
   .modal__info {
-    padding: 0 40px 20px;
+    padding: 0 20px 40px;
   }
 }

@@ -115,6 +115,9 @@ function Header({
         isOpen={activeOverlay === "mobile-menu"}
         onAddClick={onAddClick}
         onClose={closeOverlay}
+        isLoggedIn={isLoggedIn}
+        onLogout={onLogout}
+        openAuthOverlay={openAuthOverlay}
       />
     </header>
   );

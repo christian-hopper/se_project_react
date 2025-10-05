@@ -1,26 +1,22 @@
-import { useState, useEffect } from "react";
-
+import { useEffect } from "react";
 import "./LoginModal.css";
-
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import useForm from "../../hooks/useForm";
 
 function LoginModal({ isOpen, onClose, onLogin, openRegister }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange, errors, isValid, resetForm } = useForm({
+    email: "",
+    password: "",
+  });
 
   useEffect(() => {
-    if (isOpen) {
-      setEmail("");
-      setPassword("");
-    }
-  }, [isOpen]);
+    if (isOpen) resetForm();
+  }, [isOpen, resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin({ email, password });
+    onLogin(values);
   };
-
-  const isSubmitDisabled = !email || !password;
 
   return (
     <ModalWithForm
@@ -31,32 +27,35 @@ function LoginModal({ isOpen, onClose, onLogin, openRegister }) {
       onSubmit={handleSubmit}
       secondaryText="or Sign Up"
       onSecondaryClick={openRegister}
-      isSubmitDisabled={isSubmitDisabled}
+      isSubmitDisabled={!isValid}
     >
-      <label htmlFor="login-email" className="modal__label">
+      <label className="modal__label">
         Email *
         <input
-          id="login-email"
+          name="email"
           type="email"
           placeholder="Email"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={values.email || ""}
+          onChange={handleChange}
           className="modal__input"
         />
+        <span className="modal__error">{errors.email}</span>
       </label>
 
-      <label htmlFor="login-password" className="modal__label">
+      <label className="modal__label">
         Password *
         <input
-          id="login-password"
+          name="password"
           type="password"
           placeholder="Password"
           required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          minLength="6"
+          value={values.password || ""}
+          onChange={handleChange}
           className="modal__input"
         />
+        <span className="modal__error">{errors.password}</span>
       </label>
     </ModalWithForm>
   );

@@ -69,3 +69,9 @@
   ~ .toggle-switch__label_c {
   color: #000;
 }
+
+@media (max-width: 768px) {
+  .toggle-switch {
+    margin: 0;
+  }
+}

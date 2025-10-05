@@ -1,83 +1,72 @@
-import { useState, useContext, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import "./EditProfileModal.css";
-
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { updateUserInfo } from "../../utils/api";
+import useForm from "../../hooks/useForm";
 
 function EditProfileModal({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setName("");
-      setAvatar("");
-    }
-  }, [isOpen]);
+  const { values, handleChange, errors, isValid, resetForm, setValues } =
+    useForm({ name: "", avatar: "" });
 
   useEffect(() => {
     if (isOpen && currentUser) {
-      setName(currentUser.name || "");
-      setAvatar(currentUser.avatar || "");
+      setValues({
+        name: currentUser.name || "",
+        avatar: currentUser.avatar || "",
+      });
     }
-  }, [isOpen, currentUser]);
+  }, [isOpen, currentUser, setValues]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    updateUserInfo({ name, avatar })
+    updateUserInfo(values)
       .then((updatedUser) => {
         onUpdateUser(updatedUser);
         onClose();
       })
-      .catch((error) => {
-        console.error("Error updating user info:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .catch((error) => console.error("Error updating user info:", error));
   };
-
-  const isSubmitDisabled = !name || !avatar;
 
   return (
     <ModalWithForm
       titleText="Change profile data"
-      buttonText={isLoading ? "Saving Changes..." : "Save Changes"}
+      buttonText="Save Changes"
       isOpen={isOpen}
       closeActiveModal={onClose}
       onSubmit={handleSubmit}
-      isSubmitDisabled={isSubmitDisabled}
+      isSubmitDisabled={!isValid}
     >
       <label htmlFor="edit-name" className="modal__label">
         Name *
         <input
           id="edit-name"
+          name="name"
           type="text"
           placeholder="Name"
           minLength="1"
           maxLength="30"
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={values.name || ""}
+          onChange={handleChange}
           className="modal__input"
         />
+        <span className="modal__error">{errors.name}</span>
       </label>
 
       <label htmlFor="edit-avatar" className="modal__label">
-        Avatar *
+        Avatar URL
         <input
           id="edit-avatar"
+          name="avatar"
           type="url"
           placeholder="Avatar URL"
-          required
-          value={avatar}
-          onChange={(e) => setAvatar(e.target.value)}
+          value={values.avatar || ""}
+          onChange={handleChange}
           className="modal__input"
         />
+        <span className="modal__error">{errors.avatar}</span>
       </label>
     </ModalWithForm>
   );

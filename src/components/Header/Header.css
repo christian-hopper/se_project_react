@@ -71,15 +71,17 @@
   .header__logo {
     margin: 0;
   }
-  .header__add-clothes-button,
-  .header__user-container {
-    display: none;
+  .header__toggle-switch {
+    margin: 0;
   }
-
   .header__menu-toggle {
     display: block;
   }
-  .header__toggle-switch {
+  .header__add-clothes-button,
+  .header__user-container,
+  .header__toggle-switch,
+  .header__signup-button,
+  .header__login-button {
     display: none;
   }
 }

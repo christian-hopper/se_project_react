@@ -4,12 +4,16 @@ import { checkResponse } from "./api.js";
 
 // Signup request
 function signup({ name, avatar, email, password }) {
+  const body = avatar
+    ? { name, avatar, email, password }
+    : { name, email, password };
+
   return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, avatar, email, password }),
+    body: JSON.stringify(body),
   }).then(checkResponse);
 }
 

@@ -9,27 +9,21 @@ function AddItemModal({
   closeActiveModal,
   onAddItemModalSubmit,
 }) {
-  const { values, handleChange, setValues } = useForm({
+  const { values, handleChange, errors, isValid, resetForm } = useForm({
     name: "",
     imageUrl: "",
     weather: "",
   });
 
-  const { name, imageUrl, weather } = values;
-
   useEffect(() => {
-    if (isOpen) {
-      setValues({ name: "", imageUrl: "", weather: "" });
-    }
-  }, [isOpen]);
+    if (isOpen) resetForm();
+  }, [isOpen, resetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newItem = { _id: Date.now().toString(), ...values };
     onAddItemModalSubmit(newItem);
   };
-
-  const isSubmitDisabled = !name || !imageUrl || !weather;
 
   return (
     <ModalWithForm
@@ -38,7 +32,7 @@ function AddItemModal({
       isOpen={isOpen}
       closeActiveModal={closeActiveModal}
       onSubmit={handleSubmit}
-      isSubmitDisabled={isSubmitDisabled}
+      isSubmitDisabled={!isValid}
     >
       <label className="modal__label">
         Name
@@ -49,23 +43,25 @@ function AddItemModal({
           minLength="1"
           maxLength="30"
           required
-          value={name}
+          value={values.name || ""}
           onChange={handleChange}
           className="modal__input"
         />
+        <span className="modal__error">{errors.name}</span>
       </label>
 
       <label className="modal__label">
         Image
         <input
           name="imageUrl"
-          type="text"
+          type="url"
           placeholder="Image URL"
           required
-          value={imageUrl}
+          value={values.imageUrl || ""}
           onChange={handleChange}
           className="modal__input"
         />
+        <span className="modal__error">{errors.imageUrl}</span>
       </label>
 
       <fieldset className="modal__fieldset">
@@ -76,13 +72,15 @@ function AddItemModal({
               name="weather"
               type="radio"
               value={type}
-              checked={weather === type}
+              required
+              checked={values.weather === type}
               onChange={handleChange}
               className="modal__radio"
             />
             {type.charAt(0).toUpperCase() + type.slice(1)}
           </label>
         ))}
+        <span className="modal__error">{errors.weather}</span>
       </fieldset>
     </ModalWithForm>
   );

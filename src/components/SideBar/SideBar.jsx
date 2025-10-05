@@ -9,15 +9,25 @@ function Sidebar({ onLogout, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
+  const placeholderLetter = currentUser
+    ? currentUser.name.charAt(0).toUpperCase()
+    : "?";
+
   return (
     <>
       <div className="sidebar">
         <div className="sidebar__user">
-          <img
-            src={currentUser?.avatar || avatarImg}
-            alt="User Avatar"
-            className="sidebar__avatar"
-          />
+          {currentUser?.avatar ? (
+            <img
+              src={currentUser.avatar}
+              alt="User Avatar"
+              className="sidebar__avatar avatar"
+            />
+          ) : (
+            <div className="sidebar__avatar-placeholder avatar">
+              {placeholderLetter}
+            </div>
+          )}
           <p className="sidebar__username">
             {currentUser?.name || "User name"}
           </p>

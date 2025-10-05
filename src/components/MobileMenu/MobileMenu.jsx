@@ -1,13 +1,25 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./MobileMenu.css";
 import "../../styles/common.css";
-import avatar from "../../assets/images/avatar.svg";
 import closeIcon from "../../assets/images/close-icon.png";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function MobileMenu({ onAddClick, isOpen, onClose }) {
+function MobileMenu({
+  onAddClick,
+  isOpen,
+  onClose,
+  isLoggedIn,
+  openAuthOverlay,
+  onLogout,
+}) {
   const menuRef = useRef(null);
+  const currentUser = useContext(CurrentUserContext);
+
+  const placeholderLetter = currentUser
+    ? currentUser.name.charAt(0).toUpperCase()
+    : "?";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -40,23 +52,72 @@ function MobileMenu({ onAddClick, isOpen, onClose }) {
           className="mobile-menu__close-icon"
         />
       </button>
-      <Link to="/profile" onClick={onClose} className="mobile-menu__link">
-        <div className="mobile-menu__user">
-          <p className="mobile-menu__username username">User Name</p>
-          <img
-            src={avatar}
-            alt="User Avatar"
-            className="mobile-menu__avatar avatar"
-          />
-        </div>
-      </Link>
-      <button
-        onClick={onAddClick}
-        className="mobile-menu__button add-clothes-button"
-      >
-        + Add clothes
-      </button>
-      <ToggleSwitch />
+
+      {isLoggedIn ? (
+        <>
+          <Link to="/profile" onClick={onClose} className="mobile-menu__link">
+            <div className="mobile-menu__user">
+              <p className="mobile-menu__username username">
+                {currentUser?.name}
+              </p>
+              {currentUser?.avatar ? (
+                <img
+                  src={currentUser.avatar}
+                  alt="User Avatar"
+                  className="mobile-menu__avatar avatar"
+                />
+              ) : (
+                <div className="mobile-menu__avatar-placeholder avatar">
+                  {placeholderLetter}
+                </div>
+              )}
+            </div>
+          </Link>
+
+          <button
+            onClick={onAddClick}
+            className="mobile-menu__button primary-button"
+          >
+            + Add clothes
+          </button>
+
+          <button
+            className="mobile-menu__logout-button secondary-button"
+            onClick={() => {
+              onLogout();
+              onClose();
+            }}
+          >
+            Log out
+          </button>
+
+          <ToggleSwitch />
+        </>
+      ) : (
+        <>
+          <button
+            onClick={() => {
+              openAuthOverlay("register");
+              onClose();
+            }}
+            className="mobile-menu__button primary-button"
+          >
+            Sign up
+          </button>
+
+          <button
+            onClick={() => {
+              openAuthOverlay("login");
+              onClose();
+            }}
+            className="mobile-menu__button secondary-button"
+          >
+            Log in
+          </button>
+
+          <ToggleSwitch />
+        </>
+      )}
     </div>
   );
 }
