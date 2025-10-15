@@ -3,14 +3,14 @@
   "description": "WTWR - Weather Themed Web React App that helps you plan your outfit based on the weather.",
   "author": "Christian Hopper",
   "private": true,
-  "homepage": "https://christian-hopper.github.io/se_project_react/",
+  "homepage": "https://wtwr.spottt.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run build && scp -r ./dist/* hopperchristian@wtwr.spottt.com:/home/hopperchristian/frontend",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

@@ -1,4 +1,4 @@
-export const weatherTypes = {
+const weatherTypes = {
   day: {
     clear: {
       url: new URL("../assets/images/clear-day.png", import.meta.url).href,
@@ -35,7 +35,7 @@ export const weatherTypes = {
   },
 };
 
-export const defaultWeatherTypes = {
+const defaultWeatherTypes = {
   day: {
     url: new URL("../assets/images/default-day.png", import.meta.url).href,
     condition: "default-day",
@@ -46,7 +46,7 @@ export const defaultWeatherTypes = {
   },
 };
 
-export const defaultClothingItems = [
+const defaultClothingItems = [
   {
     _id: 0,
     name: "Cap",
@@ -85,9 +85,23 @@ export const defaultClothingItems = [
   },
 ];
 
-export const coordinates = {
+const coordinates = {
   latitude: 33.9982138,
   longitude: -117.4459175,
 };
 
-export const APIkey = "e9e20a175d0334bde7becd0cce5c3ca3";
+const APIkey = "e9e20a175d0334bde7becd0cce5c3ca3";
+
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.spottt.com"
+    : "http://localhost:3001";
+
+export {
+  weatherTypes,
+  defaultWeatherTypes,
+  defaultClothingItems,
+  baseUrl,
+  coordinates,
+  APIkey,
+};
