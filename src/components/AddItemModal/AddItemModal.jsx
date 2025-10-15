@@ -21,8 +21,7 @@ function AddItemModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newItem = { _id: Date.now().toString(), ...values };
-    onAddItemModalSubmit(newItem);
+    onAddItemModalSubmit(values);
   };
 
   return (
