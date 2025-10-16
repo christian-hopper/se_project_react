@@ -200,7 +200,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename="/se_project_react">
+    <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser}>
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
