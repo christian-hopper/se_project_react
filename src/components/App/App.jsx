@@ -136,6 +136,7 @@ function App() {
   };
 
   const handleRegister = (userData) => {
+    setIsLoading(true);
     signup(userData)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
@@ -146,10 +147,12 @@ function App() {
         setIsLoggedIn(true);
         closeAuthOverlay();
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => setIsLoading(false));
   };
 
   const handleLogin = ({ email, password }) => {
+    setIsLoading(true);
     signin({ email, password })
       .then((res) => {
         localStorage.setItem("jwt", res.token);
@@ -160,7 +163,8 @@ function App() {
         setIsLoggedIn(true);
         closeAuthOverlay();
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error))
+      .finally(() => setIsLoading(false));
   };
 
   const handleLogout = () => {
@@ -278,6 +282,7 @@ function App() {
                 onClose={closeAuthOverlay}
                 onRegister={handleRegister}
                 openLogin={() => setAuthOverlay("login")}
+                isLoading={isLoading}
               />
 
               <LoginModal
@@ -285,6 +290,7 @@ function App() {
                 onClose={closeAuthOverlay}
                 onLogin={handleLogin}
                 openRegister={() => setAuthOverlay("register")}
+                isLoading={isLoading}
               />
             </div>
           </OverlayContext.Provider>

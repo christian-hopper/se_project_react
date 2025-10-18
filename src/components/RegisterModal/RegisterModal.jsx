@@ -3,7 +3,7 @@ import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import useForm from "../../hooks/useForm";
 
-function RegisterModal({ isOpen, onClose, onRegister, openLogin }) {
+function RegisterModal({ isOpen, onClose, onRegister, openLogin, isLoading }) {
   const { values, handleChange, errors, isValid, resetForm } = useForm({
     name: "",
     avatar: "",
@@ -23,13 +23,13 @@ function RegisterModal({ isOpen, onClose, onRegister, openLogin }) {
   return (
     <ModalWithForm
       titleText="Sign Up"
-      buttonText="Sign up"
+      buttonText={isLoading ? "Signing up..." : "Sign Up"}
       isOpen={isOpen}
       closeActiveModal={onClose}
       onSubmit={handleSubmit}
       secondaryText="or Log In"
       onSecondaryClick={openLogin}
-      isSubmitDisabled={!isValid}
+      isSubmitDisabled={!isValid || isLoading}
     >
       <label className="modal__label">
         Email *
